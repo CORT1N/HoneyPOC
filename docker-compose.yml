@@ -1,0 +1,75 @@
+---
+services:
+  reverse-proxy:
+    container_name: reverse-proxy
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./logs:/var/log/nginx
+      - ./ssl:/etc/nginx/ssl
+    ports:
+      - "25:25"
+      - "80:80"
+      - "443:443"
+      - "2222:2222"
+      - "3306:3306"
+    restart: unless-stopped
+
+  wordpress:
+    container_name: wordpress
+    image: wordpress:latest
+    restart: unless-stopped
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=Tf38izWsvL2VsBjrvwRzw06zavjFCghc
+      - WORDPRESS_DB_PASSWORD=Fw04V1KhZ9DQBN8bZGdoR20nHo989ceY
+      - WORDPRESS_DB_NAME=Sglschmo6p0jKBEuD4hfwLg2wm0EtDSg
+
+  db:
+    container_name: db
+    # We use a mariadb image which supports both amd64 & arm64 architecture
+    image: mariadb:10.6.4-focal
+    # If you really want to use MySQL, uncomment the following line
+    #image: mysql:8.0.27
+    command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=slwt6nc5Lr9aMFq8uWzhZkZ9QQQzG3XB
+      - MYSQL_DATABASE=Sglschmo6p0jKBEuD4hfwLg2wm0EtDSg
+      - MYSQL_USER=Tf38izWsvL2VsBjrvwRzw06zavjFCghc
+      - MYSQL_PASSWORD=Fw04V1KhZ9DQBN8bZGdoR20nHo989ceY
+
+  smtp:
+    container_name: smtp
+    # arm64 ready image
+    image: angelnu/exim
+    restart: unless-stopped
+
+  openssh-server:
+    container_name: openssh-server
+    image: lscr.io/linuxserver/openssh-server:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      # - PUBLIC_KEY=yourpublickey #optional
+      # - PUBLIC_KEY_FILE=/path/to/file #optional
+      # - PUBLIC_KEY_DIR=/path/to/directory/containing/_only_/pubkeys #optional
+      # - PUBLIC_KEY_URL=https://github.com/username.keys #optional
+      # - SUDO_ACCESS=false #optional
+      - PASSWORD_ACCESS=true #optional
+      - USER_PASSWORD=password #optional
+      # - USER_PASSWORD_FILE=/path/to/file #optional
+      - USER_NAME=attacker #optional
+      # - LOG_STDOUT= #optional
+    volumes:
+      - ssh_config:/config
+    restart: unless-stopped
+
+volumes:
+  nginx:
+  db_data:
+  ssh_config:
+...
