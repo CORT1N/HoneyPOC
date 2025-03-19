@@ -64,7 +64,7 @@ docker compose ps
     telnet localhost 3306
     ```
 
-- **Expected Result**: MySQL prompt after entering the password.
+- **Expected Result**: MySQL prompt after entering the password. (1) or MariaDB server banner. (2)
 
 ### 📧 SMTP (Port 25)
 
