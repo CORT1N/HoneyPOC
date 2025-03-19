@@ -117,6 +117,16 @@ curl -k https://localhost
 
 ---
 
+## 🔑 Command Used to Generate SSL
+
+To generate a self-signed SSL certificate for the honeypot, use the following command:
+
+```sh
+mkdir -p ./ssl && openssl req -x509 -nodes -days 1 -newkey rsa:2048 -keyout ./ssl/server.key -out ./ssl/server.crt -subj "/CN=localhost"
+```
+
+---
+
 ## ⚠️ Disclaimer – Educational Purpose Only 🚨
 
 This project is **strictly** intended for **educational and cybersecurity research purposes**. Using this honeypot in uncontrolled environments or for malicious activities is **illegal** and may lead to prosecution.
