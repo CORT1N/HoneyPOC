@@ -7,8 +7,8 @@ This project sets up a honeypot using various technologies to simulate a vulnera
 ### 1️⃣ Clone the Repository
 
 ```sh
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/CORT1N/HoneyPOC
+cd HoneyPOC
 ```
 
 ### 2️⃣ Start the Services
@@ -56,6 +56,12 @@ docker compose ps
 
     ```sh
     mysql -h 127.0.0.1 -u Tf38izWsvL2VsBjrvwRzw06zavjFCghc -p
+    ```
+
+    or
+
+    ```sh
+    telnet localhost 3306
     ```
 
 - **Expected Result**: MySQL prompt after entering the password.
